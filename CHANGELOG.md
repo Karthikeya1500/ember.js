@@ -1,12 +1,45 @@
 # Ember Changelog
 
-## v6.12.0-beta.2 (March 9, 2026)
+## v7.0.0-beta.1 (March 31, 2026)
 
-- [#21144](https://github.com/emberjs/ember.js/pull/21144) [BUGFIX] Fix crash *during* destroy in fastboot
+- [#21240](https://github.com/emberjs/ember.js/pull/21240) [CLEANUP] Remove deprecated amd bundles and `use-ember-modules` optional feature per [RFC #1101](https://rfcs.emberjs.com/id/1101-deprecate-ember-vendor-bundles).
+- [#21275](https://github.com/emberjs/ember.js/pull/21275) [CLEANUP] Remove ember barrel file (`import Ember from 'ember'`) per [RFC #1003](https://rfcs.emberjs.com/id/1003-deprecation-import-ember-from-ember).
+- [#21056](https://github.com/emberjs/ember.js/pull/21056) [CLEANUP] Remove '@ember/application's lazy load / onLoad stuff (private API)
+- [#21058](https://github.com/emberjs/ember.js/pull/21058) [CLEANUP] Remove template-compiler bootstrap for script tags
+- [#21198](https://github.com/emberjs/ember.js/pull/21198) [CLEANUP] Remove `_globalsMode` and `_prepareForGlobalsMode` from `Application`
+- [#21079](https://github.com/emberjs/ember.js/pull/21079) [CLEANUP] Remove some IE11 support (Symbols)
+- [#21204](https://github.com/emberjs/ember.js/pull/21204) [CLEANUP] Remove old browser workarounds
+- [#21206](https://github.com/emberjs/ember.js/pull/21206) [CLEANUP] Remove unused exports, variables, imports and dependencies
+- [#21257](https://github.com/emberjs/ember.js/pull/21257) [CLEANUP] Remove old testing apis.
+- [#21067](https://github.com/emberjs/ember.js/pull/21067) [BUGFIX] Remove @ember/runloop from initializer test blueprints
+- [#21076](https://github.com/emberjs/ember.js/pull/21076) [BUGFIX] Support default globals for strict mode with the runtime compiler per [RFC #1070](https://rfcs.emberjs.com/id/1070-default-globals-for-strict-mode/).
+- [#21098](https://github.com/emberjs/ember.js/pull/21098) [BUGFIX] Add support for `this` in explicit scope for the runtime template compiler.
+- [#21107](https://github.com/emberjs/ember.js/pull/21107) [BUGFIX] Fix LinkTo inside inline SVG reloads application
+- [#21108](https://github.com/emberjs/ember.js/pull/21108) [BUGFIX] Fix unhelpful error message when the function for on modifier was forgotten as param.
+- [#21109](https://github.com/emberjs/ember.js/pull/21109) [BUGFIX] Fix missing value attribute on radio/checkbox inputs bound to empty string
+- [#21122](https://github.com/emberjs/ember.js/pull/21122) [BUGFIX] Fix tracked collections delete() returning true for non-existent entries
+- [#21124](https://github.com/emberjs/ember.js/pull/21124) [BUGFIX] Fix {{#each}} runtime crash when array contains null/undefined items with key
+- [#21125](https://github.com/emberjs/ember.js/pull/21125) [BUGFIX] Fix crash when accessing negative index of helper positional args #20912
+- [#21128](https://github.com/emberjs/ember.js/pull/21128) [BUGFIX] Fix trackedMap and trackedWeakMap reactivity for existing keys
+- [#21139](https://github.com/emberjs/ember.js/pull/21139) [BUGFIX] Port BrandedArray fix for Array-as-parent bug in destroyables
+- [#21168](https://github.com/emberjs/ember.js/pull/21168) [BUGFIX] Fix EmberArray.reduce to match native behavior
+- [#21189](https://github.com/emberjs/ember.js/pull/21189) [BUGFIX] Clear stale metadata references after destruction to allow GC
+- [#21202](https://github.com/emberjs/ember.js/pull/21202) [BUGFIX] Fix `<LinkTo>`'s `@current-when` argument with nested routes containing dynamic segments
+- [#21211](https://github.com/emberjs/ember.js/pull/21211) Pull router_js into the Ember monorepo
+- [#21069](https://github.com/emberjs/ember.js/pull/21069) Internalize @handlebars/parser
+- [#21129](https://github.com/emberjs/ember.js/pull/21129) Add prod build via package.json#exports
+- [#21141](https://github.com/emberjs/ember.js/pull/21141) Run smoke-tests with and without deprecations removed
+- [#21147](https://github.com/emberjs/ember.js/pull/21147) Migrate node tests to scenarios
+- [#21169](https://github.com/emberjs/ember.js/pull/21169) Migrate smoke tests to use ESM Ember -- ES'Mber
+- [#21173](https://github.com/emberjs/ember.js/pull/21173) Update actions + lock down to shas
+- [#21185](https://github.com/emberjs/ember.js/pull/21185) Use zizmor to lint actions & workflows
+- [#21188](https://github.com/emberjs/ember.js/pull/21188) Prepare @glimmer/syntax publishing again and add smoke tests for prettier's use of it
+- [#21234](https://github.com/emberjs/ember.js/pull/21234) Refactor tracked collections to use Proxy-based approach
 
-## v6.12.0-beta.1 (February 17, 2026)
+## v6.12.0 (March 31, 2026)
+
 - [#20908](https://github.com/emberjs/ember.js/pull/20908) / [#21020](https://github.com/emberjs/ember.js/pull/21020) Merge [glimmerjs/glimmer-vm](https://github.com/glimmerjs/glimmer-vm) into the `emberjs/ember.js` monorepo.
-  - All `@glimmer/*` packages that were formerly dependencies of `ember-source` are now included in the monorepo. This enables us to more easily iterate 
+  - All `@glimmer/*` packages that were formerly dependencies of `ember-source` are now included in the monorepo. This enables us to more easily iterate
     on the Glimmer VM and related packages, avoid an integration step with `ember.js` and to more easily share code between them and `ember-source`.
   - Only a few of the packages from the `glimmer-vm` repo will continue to be published as separate packages, for example, `@glimmer/syntax` will be published.
   - The `glimmer-vm` repo has been archived and relevant issues have been moved to the `emberjs/ember.js` repo. If you have an issue that was not moved, please reopen it on ember.js, after a search.
@@ -19,6 +52,17 @@
 - [#21014](https://github.com/emberjs/ember.js/pull/21014) Rename default export `GlimmerComponent` to `Component`
 - [#21046](https://github.com/emberjs/ember.js/pull/21046) Add benchmark infrastructure
 - [#21090](https://github.com/emberjs/ember.js/pull/21090) Swap nightly ts test of ts-nightly with ts-latest for better signal-to-noise
+
+## v6.8.4 (March 27, 2026)
+
+- [#20574](https://github.com/emberjs/ember.js/pull/20574) [BUGFIX] Update ApplicationInstance#visit to use `followRedirects()` to fix `visit()` throws `TransitionAborted` error
+- [#21144](https://github.com/emberjs/ember.js/pull/21144) [BUGFIX] Fix crash *during* destroy in fastboot
+
+## v6.11.1 (March 27, 2026)
+
+- [#20574](https://github.com/emberjs/ember.js/pull/20574) [BUGFIX] Update ApplicationInstance#visit to use `followRedirects()` to fix `visit()` throws `TransitionAborted` error
+- [#21144](https://github.com/emberjs/ember.js/pull/21144) [BUGFIX] Fix crash *during* destroy in fastboot
+- [#21244](https://github.com/emberjs/ember.js/pull/21244) [BUGFIX] Fix implicit-modules naming to fix use of `use-ember-modules` with a classic build
 
 ## v6.11.0 (February 17, 2026)
 

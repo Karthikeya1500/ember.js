@@ -104,13 +104,6 @@ async function main() {
 
   doOrDie(() => spawnSync('pnpm', ['tsc', '--project', 'tsconfig/publish-types.json']));
 
-  // We're deprecating the barrel file, so this is temporary. The Ember global is a namespace,
-  // and namespaces can't be both exported and used as a type with the same semantics and
-  // capabilities as when defined in the original file -- so we're going to LIE and
-  // pretend that the barrel file is the index file (which is the same behavior as
-  // prior to the deprecation)
-  await fs.cp(path.join(TYPES_DIR, 'ember/barrel.d.ts'), path.join(TYPES_DIR, 'ember/index.d.ts'));
-
   let remappedLocationExcludes = await doOrDie(() => copyHandwrittenDefinitions('packages'));
 
   let sideEffectExcludes = await doOrDie(copyRemappedLocationModules);
@@ -161,12 +154,7 @@ async function main() {
   process.exit(status === 'success' ? 0 : 1);
 }
 
-const REMAPPED_LOCATION_MODULES = [
-  {
-    input: 'packages/loader/lib/index.d.ts',
-    output: 'require.d.ts',
-  },
-];
+const REMAPPED_LOCATION_MODULES = [];
 
 /**
   "Emit" hand-authored `.d.ts` modules for modules which need to live in a

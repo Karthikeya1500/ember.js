@@ -8,10 +8,12 @@ import {
   hash as glimmerHash,
   array as glimmerArray,
   concat as glimmerConcat,
+  eq as glimmerEq,
   get as glimmerGet,
   fn as glimmerFn,
+  neq as glimmerNeq,
 } from '@glimmer/runtime';
-import { uniqueId as glimmerUniqueId } from '@ember/-internals/glimmer';
+import { element as glimmerElement, uniqueId as glimmerUniqueId } from '@ember/-internals/glimmer';
 import { type Opaque } from '@ember/-internals/utility-types';
 
 /**
@@ -471,6 +473,26 @@ export const fn = glimmerFn as FnHelper;
 export interface FnHelper extends Opaque<'helper:fn'> {}
 
 /**
+ * The `element` helper lets you dynamically set the tag name of an element.
+ *
+ * ```js
+ * import { element } from '@ember/helper';
+ *
+ * <template>
+ *   {{#let (element @tagName) as |Tag|}}
+ *     <Tag class="my-element">Hello</Tag>
+ *   {{/let}}
+ * </template>
+ * ```
+ *
+ * When `@tagName` is `"h1"`, this renders `<h1 class="my-element">Hello</h1>`.
+ * When `@tagName` is an empty string, the block content is rendered without a
+ * wrapping element. When `@tagName` is `null` or `undefined`, nothing is rendered.
+ */
+export const element = glimmerElement as ElementHelper;
+export interface ElementHelper extends Opaque<'helper:element'> {}
+
+/**
  * Use the {{uniqueId}} helper to generate a unique ID string suitable for use as
  * an ID attribute in the DOM.
  *
@@ -490,5 +512,53 @@ export interface FnHelper extends Opaque<'helper:fn'> {}
  */
 export const uniqueId = glimmerUniqueId;
 export type UniqueIdHelper = typeof uniqueId;
+
+/**
+ * The `{{eq}}` helper returns `true` if its two arguments are strictly equal
+ * (`===`). Takes exactly two arguments.
+ *
+ * ```js
+ * import { eq } from '@ember/helper';
+ *
+ * <template>
+ *   {{if (eq @status "active") "Active" "Inactive"}}
+ * </template>
+ * ```
+ *
+ * In strict-mode (gjs/gts) templates, `eq` is available as a keyword and
+ * does not need to be imported.
+ *
+ * @method eq
+ * @param {unknown} left
+ * @param {unknown} right
+ * @return {boolean}
+ * @public
+ */
+export const eq = glimmerEq as unknown as EqHelper;
+export interface EqHelper extends Opaque<'helper:eq'> {}
+
+/**
+ * The `{{neq}}` helper returns `true` if its two arguments are strictly
+ * not equal (`!==`). Takes exactly two arguments.
+ *
+ * ```js
+ * import { neq } from '@ember/helper';
+ *
+ * <template>
+ *   {{if (neq @status "active") "Not active" "Active"}}
+ * </template>
+ * ```
+ *
+ * In strict-mode (gjs/gts) templates, `neq` is available as a keyword and
+ * does not need to be imported.
+ *
+ * @method neq
+ * @param {unknown} left
+ * @param {unknown} right
+ * @return {boolean}
+ * @public
+ */
+export const neq = glimmerNeq as unknown as NeqHelper;
+export interface NeqHelper extends Opaque<'helper:neq'> {}
 
 /* eslint-enable @typescript-eslint/no-empty-object-type */
